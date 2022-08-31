@@ -109,10 +109,9 @@ class LandingScreen extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.only(left: 20),
             child: Row(
-              children: const [
-                TicketCard(),
-                TicketCard(),
-              ],
+              children: ticketList
+                  .map((ticket) => TicketCard(ticket: ticket))
+                  .toList(),
             ),
           ),
           const Gap(10),
