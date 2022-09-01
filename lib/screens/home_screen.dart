@@ -1,6 +1,9 @@
 import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:ticket/screens/landing_screen.dart';
+import 'package:ticket/screens/profile_screen.dart';
+import 'package:ticket/screens/search_screen.dart';
+import 'package:ticket/screens/tickets_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -14,9 +17,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   static final List<Widget> _widgetOptions = <Widget>[
     const LandingScreen(),
-    const Text("Search"),
-    const Text("Tickets"),
-    const Text("Profile"),
+    const SearchScreen(),
+    const TicketsScreen(),
+    const ProfileScreen(),
   ];
 
   void _onItemTapped(int index) {

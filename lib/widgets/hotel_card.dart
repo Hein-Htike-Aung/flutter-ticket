@@ -27,16 +27,16 @@ class HotelCard extends StatelessWidget {
         ],
       ),
       width: size.width * 0.6,
-      height: 350,
+      height: AppLayout.getHeight(350),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           /* Image */
           Container(
-            height: 180,
+            height: AppLayout.getHeight(150),
             decoration: BoxDecoration(
               color: Styles.primaryColor,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(AppLayout.getHeight(12)),
               image: DecorationImage(
                 fit: BoxFit.cover,
                 image: AssetImage("assets/images/${hotel['image']}"),
@@ -44,17 +44,17 @@ class HotelCard extends StatelessWidget {
             ),
           ),
           /* Texts */
-          const Gap(15),
+          Gap(AppLayout.getHeight(15)),
           Text(
             "${hotel['place']}",
             style: Styles.headLineStyle2.copyWith(color: Styles.kakiColor),
           ),
-          const Gap(10),
+          Gap(AppLayout.getHeight(10)),
           Text(
             "${hotel['destination']}",
             style: Styles.headLineStyle3.copyWith(color: Colors.white),
           ),
-          const Gap(8),
+          Gap(AppLayout.getHeight(8)),
           Text(
             '\$${hotel['price']}/night',
             style: Styles.headLineStyle1.copyWith(color: Styles.kakiColor),

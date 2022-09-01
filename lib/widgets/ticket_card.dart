@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:get/utils.dart';
 import 'package:ticket/utils/app_layout.dart';
+import 'package:ticket/widgets/dots.dart';
 
 import '../utils/app_styles.dart';
 import 'circle.dart';
@@ -8,7 +10,11 @@ import 'circle.dart';
 class TicketCard extends StatelessWidget {
   final Map<String, dynamic> ticket;
 
-  const TicketCard({super.key, required this.ticket});
+  final bool? isWhite;
+  final bool isSingle;
+
+  const TicketCard(
+      {super.key, required this.ticket, this.isWhite, this.isSingle = false});
 
   @override
   Widget build(BuildContext context) {
@@ -19,41 +25,45 @@ which in turn means that its value can be assigned at runtime instead of the com
     final size = AppLayout.getSize(context);
 
     return SizedBox(
-      width: (0.85 * size.width),
-      height: 200,
+      width: (0.80 * size.width),
+      height: AppLayout.getHeight(GetPlatform.isAndroid == true ? 169 : 167),
       child: Container(
-        margin: const EdgeInsets.only(right: 16),
+        margin: EdgeInsets.only(
+            right: isSingle == false ? AppLayout.getHeight(10) : 0),
         child: Column(
           children: [
             /* Showing the blue part of the card */
             Container(
-              decoration: const BoxDecoration(
-                color: Color(0xFF526799),
+              decoration: BoxDecoration(
+                color: isWhite == null ? const Color(0xFF526799) : Colors.white,
                 borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(21),
-                  topRight: Radius.circular(21),
+                  topLeft: Radius.circular(AppLayout.getHeight(21)),
+                  topRight: Radius.circular(AppLayout.getHeight(21)),
                 ),
               ),
-              padding: const EdgeInsets.only(
-                  left: 16, top: 10, right: 16, bottom: 16),
+              padding: EdgeInsets.all(AppLayout.getHeight(16)),
               child: Column(
                 children: [
                   Row(
                     children: [
                       // .copyWith (override text color)
-                      Text(ticket['from']['code'],
-                          style: Styles.headLineStyle3
-                              .copyWith(color: Colors.white)),
+                      Text(
+                        ticket['from']['code'],
+                        style: isWhite == null
+                            ? Styles.headLineStyle3
+                                .copyWith(color: Colors.white)
+                            : Styles.headLineStyle3,
+                      ),
 
                       // Expanded(child: Container()) and Spacer() are the same
                       Expanded(child: Container()),
-                      const Circle(),
+                      Circle(isWhite: isWhite),
                       Expanded(
                         // Stack use to overlap the widgets each other
                         child: Stack(
                           children: [
                             SizedBox(
-                              height: 24,
+                              height: AppLayout.getHeight(24),
                               /* 
                               LayoutBuilder (can know the width of the element) 
                               (change  the number of dots according to the screen size)
@@ -71,12 +81,14 @@ which in turn means that its value can be assigned at runtime instead of the com
                                     children: List.generate(
                                       (constraints.constrainWidth() / 6)
                                           .floor(),
-                                      (index) => const SizedBox(
-                                        width: 3,
-                                        height: 1,
+                                      (index) => SizedBox(
+                                        width: AppLayout.getWidth(3),
+                                        height: AppLayout.getHeight(1),
                                         child: DecoratedBox(
                                           decoration: BoxDecoration(
-                                              color: Colors.white),
+                                              color: isWhite == null
+                                                  ? Colors.white
+                                                  : Colors.grey.shade300),
                                         ),
                                       ),
                                     ),
@@ -88,46 +100,58 @@ which in turn means that its value can be assigned at runtime instead of the com
                             Center(
                               child: Transform.rotate(
                                 angle: 1.5,
-                                child: const Icon(
+                                child: Icon(
                                   Icons.local_airport_rounded,
-                                  color: Colors.white,
+                                  color: isWhite == null
+                                      ? Colors.white
+                                      : const Color(0xFF8ACCF7),
                                 ),
                               ),
                             ),
                           ],
                         ),
                       ),
-                      const Circle(),
+                      Circle(isWhite: isWhite),
                       const Spacer(),
-                      Text(ticket['to']['code'],
-                          style: Styles.headLineStyle3
-                              .copyWith(color: Colors.white)),
+                      Text(
+                        ticket['to']['code'],
+                        style: isWhite == null
+                            ? Styles.headLineStyle3
+                                .copyWith(color: Colors.white)
+                            : Styles.headLineStyle3,
+                      ),
                     ],
                   ),
-                  const Gap(3),
+                  Gap(AppLayout.getHeight(3)),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SizedBox(
-                        width: 100,
+                        width: AppLayout.getWidth(80),
                         child: Text(
                           ticket['from']['name'],
-                          style: Styles.headLineStyle4
-                              .copyWith(color: Colors.white),
+                          style: isWhite == null
+                              ? Styles.headLineStyle4
+                                  .copyWith(color: Colors.white)
+                              : Styles.headLineStyle4,
                         ),
                       ),
                       Text(
                         ticket['flying_time'],
-                        style:
-                            Styles.headLineStyle4.copyWith(color: Colors.white),
+                        style: isWhite == null
+                            ? Styles.headLineStyle4
+                                .copyWith(color: Colors.white)
+                            : Styles.headLineStyle4,
                       ),
                       SizedBox(
-                        width: 100,
+                        width: AppLayout.getWidth(80),
                         child: Text(
                           ticket['to']['name'],
                           textAlign: TextAlign.end,
-                          style: Styles.headLineStyle4
-                              .copyWith(color: Colors.white),
+                          style: isWhite == null
+                              ? Styles.headLineStyle4
+                                  .copyWith(color: Colors.white)
+                              : Styles.headLineStyle4,
                         ),
                       ),
                     ],
@@ -137,16 +161,18 @@ which in turn means that its value can be assigned at runtime instead of the com
             ),
             /* Showing the red part of the card */
             Container(
-              color: Styles.orangeColor,
+              color: isWhite == null ? Styles.orangeColor : Colors.white,
               child: Row(
                 children: [
-                  const SizedBox(
-                    height: 20,
-                    width: 10,
+                  SizedBox(
+                    height: AppLayout.getHeight(20),
+                    width: AppLayout.getWidth(10),
                     child: DecoratedBox(
                       decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
+                        color: isWhite == null
+                            ? Colors.grey.shade200
+                            : Colors.white,
+                        borderRadius: const BorderRadius.only(
                           topRight: Radius.circular(10),
                           bottomRight: Radius.circular(10),
                         ),
@@ -155,39 +181,24 @@ which in turn means that its value can be assigned at runtime instead of the com
                   ),
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: LayoutBuilder(
-                        builder:
-                            (BuildContext context, BoxConstraints constraints) {
-                          return Flex(
-                            direction: Axis.horizontal,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            mainAxisSize: MainAxisSize.max,
-                            children: List.generate(
-                              (constraints.constrainWidth() / 15).floor(),
-                              (index) => const SizedBox(
-                                width: 5,
-                                height: 1,
-                                child: DecoratedBox(
-                                  decoration:
-                                      BoxDecoration(color: Colors.white),
-                                ),
-                              ),
-                            ),
-                          );
-                        },
+                      padding: EdgeInsets.all(AppLayout.getHeight(12)),
+                      child: const Dots(
+                        sections: 15,
+                        isWhiteBg: false,
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 20,
-                    width: 10,
+                  SizedBox(
+                    height: AppLayout.getHeight(20),
+                    width: AppLayout.getWidth(10),
                     child: DecoratedBox(
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: isWhite == null
+                            ? Colors.grey.shade200
+                            : Colors.white,
                         borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          bottomLeft: Radius.circular(10),
+                          topLeft: Radius.circular(AppLayout.getHeight(10)),
+                          bottomLeft: Radius.circular(AppLayout.getHeight(10)),
                         ),
                       ),
                     ),
@@ -197,10 +208,10 @@ which in turn means that its value can be assigned at runtime instead of the com
             ),
             Container(
               decoration: BoxDecoration(
-                color: Styles.orangeColor,
-                borderRadius: const BorderRadius.only(
-                  bottomLeft: Radius.circular(21),
-                  bottomRight: Radius.circular(21),
+                color: isWhite == null ? Styles.orangeColor : Colors.white,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(isWhite == null ? 21 : 0),
+                  bottomRight: Radius.circular(isWhite == null ? 21 : 0),
                 ),
               ),
               padding: const EdgeInsets.all(16),
@@ -214,14 +225,18 @@ which in turn means that its value can be assigned at runtime instead of the com
                         children: [
                           Text(
                             ticket['date'],
-                            style: Styles.headLineStyle3
-                                .copyWith(color: Colors.white),
+                            style: isWhite == null
+                                ? Styles.headLineStyle3
+                                    .copyWith(color: Colors.white)
+                                : Styles.headLineStyle3,
                           ),
                           const Gap(5),
                           Text(
-                            ticket['date'],
-                            style: Styles.headLineStyle4
-                                .copyWith(color: Colors.white),
+                            'Date',
+                            style: isWhite == null
+                                ? Styles.headLineStyle4
+                                    .copyWith(color: Colors.white)
+                                : Styles.headLineStyle4,
                           ),
                         ],
                       ),
@@ -230,14 +245,18 @@ which in turn means that its value can be assigned at runtime instead of the com
                         children: [
                           Text(
                             ticket['departure_time'],
-                            style: Styles.headLineStyle3
-                                .copyWith(color: Colors.white),
+                            style: isWhite == null
+                                ? Styles.headLineStyle3
+                                    .copyWith(color: Colors.white)
+                                : Styles.headLineStyle3,
                           ),
                           const Gap(5),
                           Text(
                             'Depture time',
-                            style: Styles.headLineStyle4
-                                .copyWith(color: Colors.white),
+                            style: isWhite == null
+                                ? Styles.headLineStyle4
+                                    .copyWith(color: Colors.white)
+                                : Styles.headLineStyle4,
                           ),
                         ],
                       ),
@@ -246,14 +265,18 @@ which in turn means that its value can be assigned at runtime instead of the com
                         children: [
                           Text(
                             "${ticket['number']}",
-                            style: Styles.headLineStyle3
-                                .copyWith(color: Colors.white),
+                            style: isWhite == null
+                                ? Styles.headLineStyle3
+                                    .copyWith(color: Colors.white)
+                                : Styles.headLineStyle3,
                           ),
                           const Gap(5),
                           Text(
                             'Number',
-                            style: Styles.headLineStyle4
-                                .copyWith(color: Colors.white),
+                            style: isWhite == null
+                                ? Styles.headLineStyle4
+                                    .copyWith(color: Colors.white)
+                                : Styles.headLineStyle4,
                           ),
                         ],
                       ),

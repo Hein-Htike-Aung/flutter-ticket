@@ -2,6 +2,8 @@ import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:ticket/utils/app_info.dart';
+import 'package:ticket/utils/app_layout.dart';
+import 'package:ticket/widgets/double_text.dart';
 import 'package:ticket/widgets/hotel_card.dart';
 import 'package:ticket/widgets/ticket_card.dart';
 
@@ -22,7 +24,7 @@ class LandingScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               children: [
-                const Gap(40),
+                Gap(AppLayout.getHeight(40)),
                 /* Heading */
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -34,7 +36,7 @@ class LandingScreen extends StatelessWidget {
                           "Good morning",
                           style: Styles.headLineStyle3,
                         ),
-                        const Gap(5),
+                        Gap(AppLayout.getHeight(5)),
                         Text(
                           "Book Tickets",
                           style: Styles.headLineStyle1,
@@ -42,11 +44,12 @@ class LandingScreen extends StatelessWidget {
                       ],
                     ),
                     Container(
-                      width: 50,
-                      height: 50,
+                      width: AppLayout.getWidth(50),
+                      height: AppLayout.getHeight(50),
                       decoration: BoxDecoration(
                         // BoxDecoration is for border radius
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius:
+                            BorderRadius.circular(AppLayout.getHeight(10)),
                         image: const DecorationImage(
                           fit: BoxFit.cover,
                           image: AssetImage("assets/images/img_1.png"),
@@ -55,7 +58,7 @@ class LandingScreen extends StatelessWidget {
                     )
                   ],
                 ),
-                const Gap(25),
+                Gap(AppLayout.getHeight(25)),
                 /* SearchBox */
                 Container(
                   padding:
@@ -79,32 +82,13 @@ class LandingScreen extends StatelessWidget {
               ],
             ),
           ),
-          const Gap(40),
+          Gap(AppLayout.getHeight(40)),
           /* Upcomming Flights cards */
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Upcoming Flights',
-                  style: Styles.headLineStyle2,
-                ),
-                // InkWell / GestureDetector ares clickable widgets
-                InkWell(
-                  onTap: () {
-                    debugPrint('click view all');
-                  },
-                  child: Text(
-                    "View all",
-                    style:
-                        Styles.textStyle.copyWith(color: Styles.primaryColor),
-                  ),
-                )
-              ],
-            ),
+            child: const AppDoubleText(text: 'Upcomming flights'),
           ),
-          const Gap(20),
+          Gap(AppLayout.getHeight(20)),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.only(left: 20),
@@ -114,32 +98,13 @@ class LandingScreen extends StatelessWidget {
                   .toList(),
             ),
           ),
-          const Gap(10),
+          Gap(AppLayout.getHeight(10)),
           /* Hotels */
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Hotels',
-                  style: Styles.headLineStyle2,
-                ),
-                // InkWell / GestureDetector ares clickable widgets
-                InkWell(
-                  onTap: () {
-                    debugPrint('click view all');
-                  },
-                  child: Text(
-                    "View all",
-                    style:
-                        Styles.textStyle.copyWith(color: Styles.primaryColor),
-                  ),
-                )
-              ],
-            ),
+            child: const AppDoubleText(text: "Hotels"),
           ),
-          const Gap(20),
+          Gap(AppLayout.getHeight(20)),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.only(left: 20),
